@@ -76,6 +76,9 @@ bitbake-layers create-layer
 bitbake-layers add-layer
 ```
 
+Be wary of creating a layer from within `build/`!
+This "hides" the generated config files in the build directory.
+
 ### Recipes
 
 Once source is in place, scaffold recipes with:
@@ -108,6 +111,60 @@ devtool finish hello-cmake ../meta-hello
 ```
 
 This moves the recipe from `workspace/` into the tree itself.
+
+## External repo
+
+Trying with a git URI that points to disk.
+Must mount this when running the container:
+
+```bash
+# Test mount
+./kas-container --runtime-args "-v ../hello_c:/work/src/hello_c:ro" shell hello.yml
+# Mount during build
+./kas-container --runtime-args "-v ../hello_c:/work/src/hello_c:ro" build hello.yml
+# Run as usual
+./kas-container shell hello.yml -c "runqemu qemux86-64 nographic slirp"
+```
+
+TODO I should be able to add a recipe to devtool, right?
+
+It seems so:
+
+```bash
+devtool add hello-c /work/src/hello_c
+devtool build hello-c
+# apparently?
+mkdir -p path/to/meta-hello/recipes-hello/hello-c
+devtool finish hello-c ../meta-hello
+```
+
+TODO Should be possible to unpack the source locally with:
+
+```bash
+devtool modify hello-c
+INFO: Source tree extracted to /work/build/workspace/sources/hello-c
+INFO: Recipe hello-c now set up to build from /work/build/workspace/sources/hello-c
+```
+
+Then build and test:
+
+```bash
+devtool build hello-c
+# might need this to install?
+bitbake core-image-minimal
+runqemu qemux86-64 nographic slirp
+```
+
+prefer to try this - requires a standalone qemu already running:
+
+```text
+devtool build hello-c
+devtool deploy-target hello-c root@<target>
+```
+
+```text
+find /work/build/tmp/work/*/core-image-minimal/*/rootfs/ -name hello
+```
 
 ## Notes
 
