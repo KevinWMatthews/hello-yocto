@@ -1,0 +1,17 @@
+---
+header:
+  version: 14
+machine: qemux86-64
+distro: poky
+target: core-image-minimal
+local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES = "debug-tweaks"
+repos:
+  poky:
+    url: https://git.yoctoproject.org/poky
+    branch: scarthgap
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
