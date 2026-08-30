@@ -1,3 +1,6 @@
 .kas_shell_history
 build/
 poky/
+
+oe-logs
+oe-workdir
