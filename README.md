@@ -48,18 +48,66 @@ To exit QEMU, `Ctrl-a` `x`.
 
 TODO
 
-```text
+```bash
 kas menu
-kas build # optiona, somehow?
+kas build # optional, somehow?
 ```
 
-## Shell
+## kas-container
 
-To get into the container, run:
+This creates a container with dependencies and build-related programs installed.
 
-```text
-./kas-container shell helo.yml
+To shell into the build container, run:
+
+```bash
+./kas-container shell hello.yml
 ```
+
+### Layers
+
+```bash
+bitbake-layers --help
+bitbake-layers show-layers
+bitbake-layers show-recipes # there are many!
+bitbake-layers show-appends
+
+bitbake-layers create-layer
+# Usually avoid tdhis, working with kas instead
+bitbake-layers add-layer
+```
+
+### Recipes
+
+Once source is in place, scaffold recipes with:
+
+```bash
+devtool add hello-cmake /path/to/hello-source
+```
+
+Then edit the `.bb` file in `workspace/`.
+
+When editing the source, it _can't_ be in the configuration tree by the recipe!
+It must live in a separate directory, say in `src/`. Then you can build it with:
+
+```bash
+devtool build hello-cmake
+```
+
+If just compiling, try:
+
+```bash
+bitbake -c compile hello-cmake
+```
+
+This doesn't install the binary to the image (it only runs `do_build`) so be sure to run `devtool build hello-cmake` again to run the `do_install` step.
+
+Once things work, commit this recipe using:
+
+```bash
+devtool finish hello-cmake ../meta-hello
+```
+
+This moves the recipe from `workspace/` into the tree itself.
 
 ## Notes
 
@@ -68,6 +116,8 @@ I may need to invoke kas-container directly, as `./kas-container` and not `bash 
 Git worktrees generall are not fully supported.
 
 Add `debug-tweaks` in the local conf header (appended as an entire line) so that the default password is empty.
+
+Layers are typically prefixed with `meta-`.
 
 ### Errors
 
