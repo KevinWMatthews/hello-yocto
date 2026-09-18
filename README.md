@@ -232,3 +232,10 @@ Summary: There was 1 ERROR message, returning a non-zero exit code.
 ```
 
 The solution seems to be to run a build using the `kas-container` script provided in <https://github.com/siemens/kas>.
+
+## TODO
+
+Create a workflow for building from source locally but in the kas container.
+Then learn to build from the upstream repo by default
+
+Create a hello-world Rust app.
