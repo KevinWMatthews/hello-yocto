@@ -1,4 +1,6 @@
+Output from build:
 
+```sh
 ### Shell environment set up for builds. ###
 
 You can now run 'bitbake <target>'
@@ -17,3 +19,4 @@ Other commonly useful commands are:
  - 'devtool' and 'recipetool' handle common recipe tasks
  - 'bitbake-layers' handles common layer tasks
  - 'oe-pkgdata-util' handles common target package tasks
+```

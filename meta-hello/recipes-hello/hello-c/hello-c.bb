@@ -2,7 +2,7 @@ LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
 # NOTE: this requires source to be in hard-coded relative directory!
-# TODO the source is not mounted in the container
+# NOTE: the source directory mounted in the container during build
 SRC_URI = "git:///${TOPDIR}/../src/hello_c;protocol=file;branch=main \
            file://0001-create-changes-in-Yocto-build-environment.patch \
            "

@@ -5,7 +5,7 @@ machine: qemux86-64
 distro: poky
 target: core-image-minimal
 local_conf_header:
-  hello: IMAGE_INSTALL:append = " hello-cmake hello-c"
+  hello: IMAGE_INSTALL:append = " hello-c"
   debug: |
     EXTRA_IMAGE_FEATURES = "debug-tweaks"
 repos:

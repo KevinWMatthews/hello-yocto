@@ -4,31 +4,32 @@ Introduction to the Yocto Project.
 
 This builds a "Hello World" QEMU image for x86-64 using kas, which runs bitbake.
 
-## Setup
+## Getting Started
 
-I could install kas to system, either using apt or pip.
+### Setup
 
-I am instead running it in a virtual environment using `pipx`:
+`kas` and `bitbake` are tested on specific Ubuntu versions.
+
+To work around this, these instructions recommend containerizing the build using
+[kas-container](https://github.com/siemens/kas/blob/master/kas-container).
+
+TODO Add command for downloading this.
+
+If your system is compatible, consider running `kas` commands using `pipx`:
+
+TODO Add command for installing `pipx` to system.
+
+### Build
+
+Build using `kas-container`:
 
 ```bash
-pipx run kas
-```
-
-## Build
-
-The typical build command is:
-
-```bash
-pipx run kas build hello.yml
-```
-
-but this fails on Ubuntu26. Instead use `kas-container`:
-
-```bash
+# TODO Update to include bind mount for local external library
+# TODO Push repo upstream
 ./kas-container build hello.yml
 ```
 
-## Run
+### Run
 
 ```bash
 ./kas-container shell hello.yml -c "runqemu qemux86-64 nographic slirp"
@@ -44,18 +45,37 @@ If logged in, exit with `poweroff` so that the kernel can tear down cleanly.
 
 To exit QEMU, `Ctrl-a` `x`.
 
-## Configure
+### Configure
 
-TODO
+TODO rewrite to use kas-container
 
 ```bash
 kas menu
-kas build # optional, somehow?
+kas build
 ```
 
-## kas-container
+## Customizing the System
 
-This creates a container with dependencies and build-related programs installed.
+### Add a Service
+
+TODO Learn/relearn how to create a recipe and add a layer.
+
+### Development Flow
+
+Ideally, much application development will occur in the external repo.
+
+When libraries are to be developed in the container, it is possible to build a single recipe:
+
+```bash
+bitbake hello-in-tree
+bitbake -c hello-in-tree
+```
+
+## Additional Information
+
+### kas-container
+
+`kas-container` creates a container with dependencies and build-related programs installed.
 
 To shell into the build container, run:
 
@@ -63,7 +83,23 @@ To shell into the build container, run:
 ./kas-container shell hello.yml
 ```
 
-### Layers
+### Alternate Build Instructions
+
+If `kas` is installed to system, build commands can be run directly:
+
+```bash
+kas build hello.yml
+```
+
+Alternatively, `pipx` can manage the installation of `kas`:
+
+```bash
+pipx run kas build hello.yml
+```
+
+### Bitbake Layers
+
+These commands can be run after shelling into the `kas` container.
 
 ```bash
 bitbake-layers --help
