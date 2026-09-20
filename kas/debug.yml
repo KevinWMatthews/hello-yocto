@@ -1,0 +1,6 @@
+---
+header:
+  version: 14
+local_conf_header:
+  debug-ssh: |-
+    EXTRA_IMAGE_FEATURES += "ssh-server-dropbear"

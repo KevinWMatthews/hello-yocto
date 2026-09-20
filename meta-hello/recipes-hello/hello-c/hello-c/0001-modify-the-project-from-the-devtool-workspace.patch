@@ -1,0 +1,20 @@
+From 4f23257f23d5cfd8b1aef2df32460dd58c431338 Mon Sep 17 00:00:00 2001
+From: Kevin W Matthews <kevinwmatthews@gmail.com>
+Date: Sun, 20 Sep 2026 11:57:59 -0600
+Subject: [PATCH] modify the project from the devtool workspace
+
+---
+ main.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/main.c b/main.c
+index ecb8524..992f3ef 100644
+--- a/main.c
++++ b/main.c
+@@ -3,5 +3,6 @@
+ int main(void) {
+     printf("Hello from C!\n");
+     printf("This is modified from the Yocto project.\n");
++    printf("This was modified from the devtool workspace.\n");
+     return 0;
+ }

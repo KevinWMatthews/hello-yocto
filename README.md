@@ -26,13 +26,13 @@ Build using `kas-container`:
 ```bash
 # TODO Update to include bind mount for local external library
 # TODO Push repo upstream
-./kas-container build hello.yml
+./kas-container build kas/hello.yml
 ```
 
 ### Run
 
 ```bash
-./kas-container shell hello.yml -c "runqemu qemux86-64 nographic slirp"
+./kas-container shell kas/hello.yml -c "runqemu qemux86-64 nographic slirp"
 ```
 
 - slirp: user-mode networking
@@ -44,6 +44,16 @@ password:
 If logged in, exit with `poweroff` so that the kernel can tear down cleanly.
 
 To exit QEMU, `Ctrl-a` `x`.
+
+### Develop
+
+One approach to development is to shell into the container:
+
+```bash
+./kas-container shell kas/hello.yml
+```
+
+This allows individual bitbake commands to be run easily.
 
 ### Configure
 
@@ -80,7 +90,7 @@ bitbake -c hello-in-tree
 To shell into the build container, run:
 
 ```bash
-./kas-container shell hello.yml
+./kas-container shell kas/hello.yml
 ```
 
 ### Alternate Build Instructions
@@ -88,13 +98,13 @@ To shell into the build container, run:
 If `kas` is installed to system, build commands can be run directly:
 
 ```bash
-kas build hello.yml
+kas build kas/hello.yml
 ```
 
 Alternatively, `pipx` can manage the installation of `kas`:
 
 ```bash
-pipx run kas build hello.yml
+pipx run kas build kas/hello.yml
 ```
 
 ### Bitbake Layers
@@ -155,11 +165,11 @@ Must mount this when running the container:
 
 ```bash
 # Test mount
-./kas-container --runtime-args "-v ../hello_c:/work/src/hello_c:ro" shell hello.yml
+./kas-container --runtime-args "-v ../hello_c:/work/src/hello_c:ro" shell kas/hello.yml
 # Mount during build
-./kas-container --runtime-args "-v ../hello_c:/work/src/hello_c:ro" build hello.yml
+./kas-container --runtime-args "-v ../hello_c:/work/src/hello_c:ro" build kas/hello.yml
 # Run as usual
-./kas-container shell hello.yml -c "runqemu qemux86-64 nographic slirp"
+./kas-container shell kas/hello.yml -c "runqemu qemux86-64 nographic slirp"
 ```
 
 TODO I should be able to add a recipe to devtool, right?
@@ -217,7 +227,7 @@ Layers are typically prefixed with `meta-`.
 Ubuntu 2026 is not yet supported:
 
 ```text
-$ pipx run kas build hello.yml
+$ pipx run kas build kas/hello.yml
 2026-08-27 22:38:05 - INFO     - kas 5.5 started on Ubuntu resolute
 2026-08-27 22:38:05 - INFO     - Repository poky already contains 64e69ed23703f6358ec431d3f5f1f8483f974cae as commit
 2026-08-27 22:38:05 - INFO     - Repository poky checked out to 64e69ed23703f6358ec431d3f5f1f8483f974cae

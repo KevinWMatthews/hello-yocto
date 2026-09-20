@@ -6,6 +6,7 @@ distro: poky
 target: core-image-minimal
 local_conf_header:
   hello: IMAGE_INSTALL:append = " hello-c"
+  # TODO is debug-tweaks necessary for production? Why did I do this?
   debug: |
     EXTRA_IMAGE_FEATURES = "debug-tweaks"
 repos:
